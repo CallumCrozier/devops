@@ -17,6 +17,12 @@ public class App {
         // Display results
         a.displayEmployee(emp);
 
+        // Get employee salary by role
+        Employee emp2 = a.getEmpSalariesByRole(255530);
+
+        // Display salary by role results
+        a.displayEmpSalariesByRole(emp2);
+
         // Disconnect from database
         a.disconnect();
     }
@@ -105,6 +111,46 @@ public class App {
         }
     }
 
+    public Employee getEmpSalariesByRole(int ID)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT employees.emp_no, employees.first_name, employees.last_name, salaries.salary\n" +
+                            "FROM employees, salaries, titles\n" +
+                            "WHERE employees.emp_no = salaries.emp_no\n" +
+                            "AND employees.emp_no = titles.emp_no\n" +
+                            "AND salaries.to_date = '9999-01-01'\n" +
+                            "AND titles.to_date = '9999-01-01'\n" +
+                            "AND titles.title = 'Engineer'\n" +
+                            "ORDER BY employees.emp_no ASC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee if valid
+            // Check one is returned
+            if (rset.next())
+            {
+                Employee emp2 = new Employee();
+                emp2.emp_no = rset.getInt("emp_no");
+                emp2.first_name = rset.getString("first_name");
+                emp2.last_name = rset.getString("last_name");
+                emp2.salary = rset.getInt("salary");
+                return emp2;
+            }
+            else
+                return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get employee details");
+            return null;
+        }
+    }
+
     public void displayEmployee(Employee emp)
     {
         if (emp != null)
@@ -117,6 +163,18 @@ public class App {
                             + "Salary:" + emp.salary + "\n"
                             + emp.dept_name + "\n"
                             + "Manager: " + emp.manager + "\n");
+        }
+    }
+
+    public void displayEmpSalariesByRole(Employee emp2)
+    {
+        if (emp2 != null)
+        {
+            System.out.println(
+                    emp2.emp_no + " "
+                             + emp2.first_name + " "
+                             + emp2.last_name + "\n"
+                             + "Salary: " + emp2.salary + "\n");
         }
     }
 }
