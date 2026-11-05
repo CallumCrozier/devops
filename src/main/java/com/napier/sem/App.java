@@ -32,6 +32,12 @@ public class App {
         // Call printSalaries method
         a.printSalaries(employees);
 
+        // Call getDepartment method
+        a.getDepartment("Sales");
+
+        // Call getSalariesByDepartment method
+        a.getSalariesByDepartment(new Department());
+
         // Disconnect from database
         a.disconnect();
     }
