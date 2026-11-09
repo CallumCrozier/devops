@@ -8,3 +8,5 @@
 
 ![GitHub Workflow Status (develop)](https://img.shields.io/github/actions/workflow/status/CallumCrozier/devops/main.yml?branch=develop&style=flat-square)
 
+[![codecov](https://codecov.io/gh/CallumCrozier/devops/graph/badge.svg?token=0NJGF0WU63)](https://codecov.io/gh/CallumCrozier/devops)
+
